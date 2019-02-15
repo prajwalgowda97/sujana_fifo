@@ -1,0 +1,27 @@
+//
+// File created by:  irun
+// Do not modify this file
+//
+-XLMODE
+./INCA_libs/irun.lnx8664.15.20.nc
+-RUNMODE
+../RTL/data_flow.sv
+../RTL/ECC_decoding_top.sv
+../RTL/ECC_encoding_top.sv
+../RTL/err_det_corr.sv
+../RTL/fifo_design.sv
+../RTL/MC_CSR_reg.sv
+../RTL/mem_design.sv
+../RTL/Memory_Controller_ECC.sv
+../RTL/parity_calculator_rd.sv
+../RTL/parity_calculator_wr.sv
+../RTL/top.sv
+-CDSLIB
+./INCA_libs/irun.lnx8664.15.20.nc/cdsrun.lib
+-HDLVAR
+./INCA_libs/irun.lnx8664.15.20.nc/hdlrun.var
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./INCA_libs/irun.lnx8664.15.20.nc/xllibs
+-ALLOWUNBOUND

@@ -1,0 +1,85 @@
+irun(64): 15.20-s051: (c) Copyright 1995-2018 Cadence Design Systems, Inc.
+TOOL:	irun(64)	15.20-s051: Started on Mar 15, 2023 at 17:41:24 IST
+irun
+	-access +rwc
+	../RTL/data_flow.sv
+	../RTL/ECC_decoding_top.sv
+	../RTL/ECC_encoding_top.sv
+	../RTL/err_det_corr.sv
+	../RTL/fifo_design.sv
+	../RTL/MC_CSR_reg.sv
+	../RTL/mem_design.sv
+	../RTL/Memory_Controller_ECC.sv
+	../RTL/parity_calculator_rd.sv
+	../RTL/parity_calculator_wr.sv
+	../RTL/top.sv
+file: ../RTL/data_flow.sv
+	module worklib.DataFlowController:sv
+		errors: 0, warnings: 0
+file: ../RTL/ECC_decoding_top.sv
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                                                                                                                |
+ncvlog: *W,NOCMIC (../RTL/ECC_decoding_top.sv,22|112): error-prone block comment nested within block comment [2.3(IEEE)].
+	module worklib.ECC_decoding:sv
+		errors: 0, warnings: 0
+file: ../RTL/ECC_encoding_top.sv
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                                                                                                                |
+ncvlog: *W,NOCMIC (../RTL/ECC_encoding_top.sv,22|112): error-prone block comment nested within block comment [2.3(IEEE)].
+	module worklib.ECC_encoding:sv
+		errors: 0, warnings: 0
+file: ../RTL/err_det_corr.sv
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                                                                                                                |
+ncvlog: *W,NOCMIC (../RTL/err_det_corr.sv,22|112): error-prone block comment nested within block comment [2.3(IEEE)].
+	module worklib.err_det_corr:sv
+		errors: 0, warnings: 0
+file: ../RTL/fifo_design.sv
+	module worklib.fifo:sv
+		errors: 0, warnings: 0
+file: ../RTL/MC_CSR_reg.sv
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                                                                                                                |
+ncvlog: *W,NOCMIC (../RTL/MC_CSR_reg.sv,22|112): error-prone block comment nested within block comment [2.3(IEEE)].
+	module worklib.CSR_registers:sv
+		errors: 0, warnings: 0
+file: ../RTL/mem_design.sv
+	module worklib.DualPortRAM:sv
+		errors: 0, warnings: 0
+file: ../RTL/Memory_Controller_ECC.sv
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                                                                                                                |
+ncvlog: *W,NOCMIC (../RTL/Memory_Controller_ECC.sv,22|112): error-prone block comment nested within block comment [2.3(IEEE)].
+	module worklib.mem_ctrl:sv
+		errors: 0, warnings: 0
+file: ../RTL/parity_calculator_rd.sv
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                                                                                                                |
+ncvlog: *W,NOCMIC (../RTL/parity_calculator_rd.sv,22|112): error-prone block comment nested within block comment [2.3(IEEE)].
+	module worklib.parity_calc_rd:sv
+		errors: 0, warnings: 0
+file: ../RTL/parity_calculator_wr.sv
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                                                                                                                |
+ncvlog: *W,NOCMIC (../RTL/parity_calculator_wr.sv,22|112): error-prone block comment nested within block comment [2.3(IEEE)].
+	module worklib.parity_calculator:sv
+		errors: 0, warnings: 0
+file: ../RTL/top.sv
+	module worklib.top_sync_fifo_with_ecc:sv
+		errors: 0, warnings: 0
+	Total errors/warnings found outside modules and primitives:
+		errors: 0, warnings: 7
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+		Caching library 'worklib' ....... Done
+data_enc_inst             
+            |
+ncelab: *E,CUVMUR (./ECC_encoding_top.sv,84|12): instance 'top_sync_fifo_with_ecc.memory_controll_ECC@mem_ctrl<module>.ECC_encoding_inst@ECC_encoding<module>.data_enc_inst' of design unit 'data_enc' is unresolved in 'worklib.ECC_encoding:sv'.
+data_decoding_inst                   
+                 |
+ncelab: *E,CUVMUR (./ECC_decoding_top.sv,106|17): instance 'top_sync_fifo_with_ecc.memory_controll_ECC@mem_ctrl<module>.ECC_decoding_inst@ECC_decoding<module>.data_decoding_inst' of design unit 'data_decoding' is unresolved in 'worklib.ECC_decoding:sv'.
+  ) u_adapter (
+            |
+ncelab: *E,CUVMUR (./MC_CSR_reg.sv,77|12): instance 'top_sync_fifo_with_ecc.memory_controll_ECC@mem_ctrl<module>.CSR_registers_inst@CSR_registers<module>.u_adapter' of design unit 'rggen_apb_adapter' is unresolved in 'worklib.CSR_registers:sv'.
+irun: *E,ELBERR: Error during elaboration (status 1), exiting.
+TOOL:	irun(64)	15.20-s051: Exiting on Mar 15, 2023 at 17:41:24 IST  (total: 00:00:00)

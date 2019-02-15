@@ -1,0 +1,11 @@
+sync_fifo_reset_test              1
+sync_fifo_write_test              1    
+sync_fifo_read_test               1
+sync_fifo_write_read_test         1
+//sync_fifo_rand_test               1
+sync_fifo_exm_empty_test          1
+sync_fifo_exm_full_test           1
+sync_fifo_ae_test                 1
+sync_fifo_af_test                 1
+sync_fifo_of_test                 1
+sync_fifo_uf_test                 1

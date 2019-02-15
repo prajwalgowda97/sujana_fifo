@@ -1,0 +1,376 @@
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+array unset createdGroup
+array set createdGroup {}
+#
+# Groups
+#
+if {[catch {group get -using [list ENQ FIFO]}]} {
+set createdGroup([list ENQ FIFO]) 1
+catch {group new -name {ENQ FIFO} -overlay 0}
+}
+if {[catch {group get -using [list DFC]}]} {
+set createdGroup([list DFC]) 1
+catch {group new -name DFC -overlay 0}
+}
+if {[catch {group get -using [list Ext_mem]}]} {
+set createdGroup([list Ext_mem]) 1
+catch {group new -name Ext_mem -overlay 0}
+}
+if {[catch {group get -using [list DEQ_FIFO]}]} {
+set createdGroup([list DEQ_FIFO]) 1
+catch {group new -name DEQ_FIFO -overlay 0}
+}
+if {[info exists createdGroup([list ENQ FIFO])]} {
+group using {ENQ FIFO}
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.hw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.sw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.wr_en}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.wr_data[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.wr_lvl[5:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.fifo_empty}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.rd_en}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.rd_data_out[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.enqueue_fifo.rd_lvl[5:0]}]} ]
+}
+
+if {[info exists createdGroup([list DFC])]} {
+group using DFC
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.hw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.sw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.en_fifo_empty}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.top_rd_en}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.en_fifo_rd_data[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.mem_din[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.mem_empty}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.mem_full}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.write_count[9:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.wr_addr[9:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.mem_re}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.rd_addr[9:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.data_count[9:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.read_count[9:0]}]} ]
+}
+
+if {[info exists createdGroup([list Ext_mem])]} {
+group using Ext_mem
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {sync_fifo_top.dut.external_memory.clk}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.hw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.sw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.we}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.din[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.wr_ptr[9:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.empty}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.full}]} ] \
+    [subst  {[format {sync_fifo_top.dut.top_rd_en}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.mem[0:1023]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.mem_re}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.re}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.dout[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.rd_addr[9:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.external_memory.rd_ptr[9:0]}]} ]
+}
+
+if {[info exists createdGroup([list DEQ_FIFO])]} {
+group using DEQ_FIFO
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {sync_fifo_top.dut.data_flow_controller.mem_dout[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.hw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.sw_rst}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.wr_en}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.wr_data[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.wr_lvl[5:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.fifo_empty}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.rd_en}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.rd_data_out[31:0]}]} ] \
+    [subst  {[format {sync_fifo_top.dut.dequeue_fifo.rd_lvl[5:0]}]} ]
+}
+
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.clk}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.hw_rst}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.sw_rst}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.top_wr_en}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.top_wr_data[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.top_rd_en}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.almost_empty_value[9:0]}]}
+	} ]]
+waveform format $id -radix %d
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.almost_full_value[9:0]}]}
+	} ]]
+waveform format $id -radix %d
+set id [waveform add -cdivider divider]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.top_rd_data[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.valid}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.almost_empty}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.almost_full}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.ext_mem_empty}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.ext_mem_full}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.overflow}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.underflow}]}
+	} ]]
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups {{ENQ FIFO}}]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs} [subst  {
+    {[format {sync_fifo_top.dut.enqueue_fifo.hw_rst}]} {}
+    {[format {sync_fifo_top.dut.enqueue_fifo.sw_rst}]} {}
+    {[format {sync_fifo_top.dut.enqueue_fifo.wr_en}]} {}
+    {[format {sync_fifo_top.dut.enqueue_fifo.wr_data[31:0]}]} {}
+    {[format {sync_fifo_top.dut.enqueue_fifo.wr_lvl[5:0]}]} {-radix %d}
+    {[format {sync_fifo_top.dut.enqueue_fifo.fifo_empty}]} {}
+    {[format {sync_fifo_top.dut.enqueue_fifo.rd_en}]} {}
+    {[format {sync_fifo_top.dut.enqueue_fifo.rd_data_out[31:0]}]} {}
+    {[format {sync_fifo_top.dut.enqueue_fifo.rd_lvl[5:0]}]} {-radix %d}
+}] childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format path $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+waveform hierarchy collapse $groupId0
+
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups DFC]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs} [subst  {
+    {[format {sync_fifo_top.dut.data_flow_controller.hw_rst}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.sw_rst}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.en_fifo_empty}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.top_rd_en}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.en_fifo_rd_data[31:0]}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.mem_din[31:0]}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.mem_empty}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.mem_full}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.write_count[9:0]}]} {-radix %d}
+    {[format {sync_fifo_top.dut.data_flow_controller.wr_addr[9:0]}]} {-radix %d}
+    {[format {sync_fifo_top.dut.data_flow_controller.mem_re}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.rd_addr[9:0]}]} {-radix %d}
+    {[format {sync_fifo_top.dut.data_flow_controller.data_count[9:0]}]} {-radix %d}
+    {[format {sync_fifo_top.dut.data_flow_controller.read_count[9:0]}]} {-radix %d}
+}] childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format path $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups Ext_mem]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs} [subst  {
+    {[format {sync_fifo_top.dut.external_memory.clk}]} {}
+    {[format {sync_fifo_top.dut.external_memory.hw_rst}]} {}
+    {[format {sync_fifo_top.dut.external_memory.sw_rst}]} {}
+    {[format {sync_fifo_top.dut.external_memory.we}]} {}
+    {[format {sync_fifo_top.dut.external_memory.din[31:0]}]} {}
+    {[format {sync_fifo_top.dut.external_memory.wr_ptr[9:0]}]} {-radix %d}
+    {[format {sync_fifo_top.dut.external_memory.empty}]} {}
+    {[format {sync_fifo_top.dut.external_memory.full}]} {}
+    {[format {sync_fifo_top.dut.top_rd_en}]} {}
+    {[format {sync_fifo_top.dut.external_memory.mem[0:1023]}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.mem_re}]} {}
+    {[format {sync_fifo_top.dut.external_memory.re}]} {}
+    {[format {sync_fifo_top.dut.external_memory.dout[31:0]}]} {}
+    {[format {sync_fifo_top.dut.data_flow_controller.rd_addr[9:0]}]} {-radix %d}
+    {[format {sync_fifo_top.dut.external_memory.rd_ptr[9:0]}]} {-radix %d}
+}] childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {
+        set id $gpID0
+        waveform hierarchy collapse $id
+    }
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format path $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups DEQ_FIFO]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs} [subst  {
+    {[format {sync_fifo_top.dut.data_flow_controller.mem_dout[31:0]}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.hw_rst}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.sw_rst}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.wr_en}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.wr_data[31:0]}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.wr_lvl[5:0]}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.fifo_empty}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.rd_en}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.rd_data_out[31:0]}]} {}
+    {[format {sync_fifo_top.dut.dequeue_fifo.rd_lvl[5:0]}]} {-radix %d}
+}] childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format path $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.top_rd_en}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.top_rd_data[31:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.valid}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.almost_empty}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.almost_full}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.ext_mem_empty}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.ext_mem_full}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.overflow}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {sync_fifo_top.dut.underflow}]}
+	} ]]
+
+waveform xview limits 0 120ns

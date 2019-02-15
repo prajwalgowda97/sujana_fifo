@@ -1,0 +1,12 @@
+1678882209 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/parity_calculator_rd.sv
+1678715762 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/MC_CSR_reg.sv
+1678710820 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/Memory_Controller_ECC.sv
+1678715676 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/ECC_encoding_top.sv
+1678374282 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/hamming.sv
+1678881412 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/top.sv
+1678804468 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/data_flow.sv
+1678715654 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/ECC_decoding_top.sv
+1678789808 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/mem_design.sv
+1678882233 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/parity_calculator_wr.sv
+1678882254 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/err_det_corr.sv
+1678789773 /home/vvtrainee34/Desktop/Work_PS_Shashank/SYNC_FIFO_EXT_ECC/RTL/fifo_design.sv

@@ -1,0 +1,11 @@
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1001 +UVM_TESTNAME=sync_fifo_reset_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1002 +UVM_TESTNAME=sync_fifo_write_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1003 +UVM_TESTNAME=sync_fifo_read_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1004 +UVM_TESTNAME=sync_fifo_write_read_test
+//xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1005 +UVM_TESTNAME=sync_fifo_rand_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1006 +UVM_TESTNAME=sync_fifo_exm_empty_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1007 +UVM_TESTNAME=sync_fifo_ext_full_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1008 +UVM_TESTNAME=sync_fifo_ae_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1009 +UVM_TESTNAME=sync_fifo_af_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1010 +UVM_TESTNAME=sync_fifo_of_test
+xrun -access +rwc -f compile_list.f -coverage all -covdut TopModule -covworkdir ./cov_work -covoverwrite -covfile ./cov_files/cov_cmd.cf -uvmhome CDNS-1.1d -seed 1010 +UVM_TESTNAME=sync_fifo_uf_test

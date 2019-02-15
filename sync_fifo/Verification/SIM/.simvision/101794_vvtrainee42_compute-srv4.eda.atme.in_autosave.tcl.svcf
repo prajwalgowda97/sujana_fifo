@@ -1,0 +1,413 @@
+
+#
+# Preferences
+#
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-sendToIndago-WaveWindow {
+  usual
+  position -pos 1
+}
+preferences set toolbar-Standard-Console {
+  usual
+  position -pos 1
+}
+preferences set toolbar-Search-Console {
+  usual
+  position -pos 2
+}
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+
+#
+# Databases
+#
+database require wave -search {
+	./wave.shm/wave.trn
+	/home/vvtrainee42/Desktop/sujana/sync_fifo/Verification/SIM/wave.shm/wave.trn
+}
+#
+# Groups
+#
+catch {group new -name {ENQ FIFO} -overlay 0}
+catch {group new -name DFC -overlay 0}
+catch {group new -name Ext_mem -overlay 0}
+catch {group new -name DEQ_FIFO -overlay 0}
+group using {ENQ FIFO}
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+
+group insert \
+    wave::sync_fifo_top.dut.enqueue_fifo.hw_rst \
+    wave::sync_fifo_top.dut.enqueue_fifo.sw_rst \
+    wave::sync_fifo_top.dut.enqueue_fifo.wr_en \
+    wave::sync_fifo_top.dut.enqueue_fifo.wr_data[31:0] \
+    wave::sync_fifo_top.dut.enqueue_fifo.wr_lvl[5:0] \
+    wave::sync_fifo_top.dut.enqueue_fifo.fifo_empty \
+    wave::sync_fifo_top.dut.enqueue_fifo.rd_en \
+    wave::sync_fifo_top.dut.enqueue_fifo.rd_data_out[31:0] \
+    wave::sync_fifo_top.dut.enqueue_fifo.rd_lvl[5:0]
+group using DFC
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+
+group insert \
+    wave::sync_fifo_top.dut.data_flow_controller.hw_rst \
+    wave::sync_fifo_top.dut.data_flow_controller.sw_rst \
+    wave::sync_fifo_top.dut.data_flow_controller.en_fifo_empty \
+    wave::sync_fifo_top.dut.data_flow_controller.top_rd_en \
+    wave::sync_fifo_top.dut.data_flow_controller.en_fifo_rd_data[31:0] \
+    wave::sync_fifo_top.dut.data_flow_controller.mem_din[31:0] \
+    wave::sync_fifo_top.dut.data_flow_controller.mem_empty \
+    wave::sync_fifo_top.dut.data_flow_controller.mem_full \
+    wave::sync_fifo_top.dut.data_flow_controller.write_count[9:0] \
+    wave::sync_fifo_top.dut.data_flow_controller.wr_addr[9:0] \
+    wave::sync_fifo_top.dut.data_flow_controller.mem_re \
+    wave::sync_fifo_top.dut.data_flow_controller.rd_addr[9:0] \
+    wave::sync_fifo_top.dut.data_flow_controller.data_count[9:0] \
+    wave::sync_fifo_top.dut.data_flow_controller.read_count[9:0]
+group using Ext_mem
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+
+group insert \
+    wave::sync_fifo_top.dut.external_memory.clk \
+    wave::sync_fifo_top.dut.external_memory.hw_rst \
+    wave::sync_fifo_top.dut.external_memory.sw_rst \
+    wave::sync_fifo_top.dut.external_memory.we \
+    wave::sync_fifo_top.dut.external_memory.din[31:0] \
+    wave::sync_fifo_top.dut.external_memory.wr_ptr[9:0] \
+    wave::sync_fifo_top.dut.external_memory.empty \
+    wave::sync_fifo_top.dut.external_memory.full \
+    wave::sync_fifo_top.dut.top_rd_en \
+    wave::sync_fifo_top.dut.external_memory.mem[0:1023] \
+    wave::sync_fifo_top.dut.data_flow_controller.mem_re \
+    wave::sync_fifo_top.dut.external_memory.re \
+    wave::sync_fifo_top.dut.external_memory.dout[31:0] \
+    wave::sync_fifo_top.dut.data_flow_controller.rd_addr[9:0] \
+    wave::sync_fifo_top.dut.external_memory.rd_ptr[9:0]
+group using DEQ_FIFO
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+
+group insert \
+    wave::sync_fifo_top.dut.data_flow_controller.mem_dout[31:0] \
+    wave::sync_fifo_top.dut.dequeue_fifo.hw_rst \
+    wave::sync_fifo_top.dut.dequeue_fifo.sw_rst \
+    wave::sync_fifo_top.dut.dequeue_fifo.wr_en \
+    wave::sync_fifo_top.dut.dequeue_fifo.wr_data[31:0] \
+    wave::sync_fifo_top.dut.dequeue_fifo.wr_lvl[5:0] \
+    wave::sync_fifo_top.dut.dequeue_fifo.fifo_empty \
+    wave::sync_fifo_top.dut.dequeue_fifo.rd_en \
+    wave::sync_fifo_top.dut.dequeue_fifo.rd_data_out[31:0] \
+    wave::sync_fifo_top.dut.dequeue_fifo.rd_lvl[5:0]
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1366x665+-1+27}] != ""} {
+    window geometry "Waveform 1" 1366x665+-1+27
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar select designbrowser
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 175 \
+    -units ns \
+    -valuewidth 75
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.clk
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.hw_rst
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.sw_rst
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.top_wr_en
+	} ]
+set id [waveform add -signals  {
+	{wave::sync_fifo_top.dut.top_wr_data[31:0]}
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.top_rd_en
+	} ]
+set id [waveform add -signals  {
+	{wave::sync_fifo_top.dut.almost_empty_value[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{wave::sync_fifo_top.dut.almost_full_value[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -cdivider divider]
+set id [waveform add -signals  {
+	{wave::sync_fifo_top.dut.top_rd_data[31:0]}
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.valid
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.almost_empty
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.almost_full
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.ext_mem_empty
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.ext_mem_full
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.overflow
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.underflow
+	} ]
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups {{ENQ FIFO}}]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs}  {
+    wave::sync_fifo_top.dut.enqueue_fifo.hw_rst {}
+    wave::sync_fifo_top.dut.enqueue_fifo.sw_rst {}
+    wave::sync_fifo_top.dut.enqueue_fifo.wr_en {}
+    {wave::sync_fifo_top.dut.enqueue_fifo.wr_data[31:0]} {}
+    {wave::sync_fifo_top.dut.enqueue_fifo.wr_lvl[5:0]} {-radix %d}
+    wave::sync_fifo_top.dut.enqueue_fifo.fifo_empty {}
+    wave::sync_fifo_top.dut.enqueue_fifo.rd_en {}
+    {wave::sync_fifo_top.dut.enqueue_fifo.rd_data_out[31:0]} {}
+    {wave::sync_fifo_top.dut.enqueue_fifo.rd_lvl[5:0]} {-radix %d}
+} childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format fullpath $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+waveform hierarchy collapse $groupId0
+
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups DFC]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs}  {
+    wave::sync_fifo_top.dut.data_flow_controller.hw_rst {}
+    wave::sync_fifo_top.dut.data_flow_controller.sw_rst {}
+    wave::sync_fifo_top.dut.data_flow_controller.en_fifo_empty {}
+    wave::sync_fifo_top.dut.data_flow_controller.top_rd_en {}
+    {wave::sync_fifo_top.dut.data_flow_controller.en_fifo_rd_data[31:0]} {}
+    {wave::sync_fifo_top.dut.data_flow_controller.mem_din[31:0]} {}
+    wave::sync_fifo_top.dut.data_flow_controller.mem_empty {}
+    wave::sync_fifo_top.dut.data_flow_controller.mem_full {}
+    {wave::sync_fifo_top.dut.data_flow_controller.write_count[9:0]} {-radix %d}
+    {wave::sync_fifo_top.dut.data_flow_controller.wr_addr[9:0]} {-radix %d}
+    wave::sync_fifo_top.dut.data_flow_controller.mem_re {}
+    {wave::sync_fifo_top.dut.data_flow_controller.rd_addr[9:0]} {-radix %d}
+    {wave::sync_fifo_top.dut.data_flow_controller.data_count[9:0]} {-radix %d}
+    {wave::sync_fifo_top.dut.data_flow_controller.read_count[9:0]} {-radix %d}
+} childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format fullpath $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups Ext_mem]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs}  {
+    wave::sync_fifo_top.dut.external_memory.clk {}
+    wave::sync_fifo_top.dut.external_memory.hw_rst {}
+    wave::sync_fifo_top.dut.external_memory.sw_rst {}
+    wave::sync_fifo_top.dut.external_memory.we {}
+    {wave::sync_fifo_top.dut.external_memory.din[31:0]} {}
+    {wave::sync_fifo_top.dut.external_memory.wr_ptr[9:0]} {-radix %d}
+    wave::sync_fifo_top.dut.external_memory.empty {}
+    wave::sync_fifo_top.dut.external_memory.full {}
+    wave::sync_fifo_top.dut.top_rd_en {}
+    {wave::sync_fifo_top.dut.external_memory.mem[0:1023]} {}
+    wave::sync_fifo_top.dut.data_flow_controller.mem_re {}
+    wave::sync_fifo_top.dut.external_memory.re {}
+    {wave::sync_fifo_top.dut.external_memory.dout[31:0]} {}
+    {wave::sync_fifo_top.dut.data_flow_controller.rd_addr[9:0]} {-radix %d}
+    {wave::sync_fifo_top.dut.external_memory.rd_ptr[9:0]} {-radix %d}
+} childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {
+        set id $gpID0
+        waveform hierarchy collapse $id
+    }
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format fullpath $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+
+set id [waveform add -cdivider divider]
+
+set groupId0 [waveform add -groups DEQ_FIFO]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs}  {
+    {wave::sync_fifo_top.dut.data_flow_controller.mem_dout[31:0]} {}
+    wave::sync_fifo_top.dut.dequeue_fifo.hw_rst {}
+    wave::sync_fifo_top.dut.dequeue_fifo.sw_rst {}
+    wave::sync_fifo_top.dut.dequeue_fifo.wr_en {}
+    {wave::sync_fifo_top.dut.dequeue_fifo.wr_data[31:0]} {}
+    {wave::sync_fifo_top.dut.dequeue_fifo.wr_lvl[5:0]} {}
+    wave::sync_fifo_top.dut.dequeue_fifo.fifo_empty {}
+    wave::sync_fifo_top.dut.dequeue_fifo.rd_en {}
+    {wave::sync_fifo_top.dut.dequeue_fifo.rd_data_out[31:0]} {}
+    {wave::sync_fifo_top.dut.dequeue_fifo.rd_lvl[5:0]} {-radix %d}
+} childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format fullpath $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.top_rd_en
+	} ]
+set id [waveform add -signals  {
+	{wave::sync_fifo_top.dut.top_rd_data[31:0]}
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.valid
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.almost_empty
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.almost_full
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.ext_mem_empty
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.ext_mem_full
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.overflow
+	} ]
+set id [waveform add -signals  {
+	wave::sync_fifo_top.dut.underflow
+	} ]
+
+waveform xview limits 0 120ns
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 600x250+0+0
+
+#
+# Layout selection
+#

@@ -1,0 +1,31 @@
+irun(64): 15.20-s051: (c) Copyright 1995-2018 Cadence Design Systems, Inc.
+TOOL:	irun(64)	15.20-s051: Started on Mar 06, 2023 at 19:56:50 IST
+irun
+	-access +rwc
+	../RTL/controller_design.sv
+	../RTL/fifo_design.sv
+	../RTL/mem_design.sv
+	../RTL/top_design2.sv
+file: ../RTL/controller_design.sv
+    always @(posedge clk or negedge reset) begin
+         |
+ncvlog: *E,NOTSTT (../RTL/controller_design.sv,100|9): expecting a statement [9(IEEE)].
+	module worklib.DataFlowController:sv
+		errors: 1, warnings: 0
+file: ../RTL/fifo_design.sv
+	module worklib.fifo:sv
+		errors: 0, warnings: 0
+file: ../RTL/mem_design.sv
+            we <= 1'b0; 
+             |
+ncvlog: *E,WANOTL (../RTL/mem_design.sv,28|13): A net is not a legal lvalue in this context [9.3.1(IEEE)].
+            re <= 1'b0;
+             |
+ncvlog: *E,WANOTL (../RTL/mem_design.sv,38|13): A net is not a legal lvalue in this context [9.3.1(IEEE)].
+	module worklib.DualPortRAM:sv
+		errors: 2, warnings: 0
+file: ../RTL/top_design2.sv
+	module worklib.TopModule:sv
+		errors: 0, warnings: 0
+irun: *E,VLGERR: An error occurred during parsing.  Review the log file for errors with the code *E and fix those identified problems to proceed.  Exiting with code (status 1).
+TOOL:	irun(64)	15.20-s051: Exiting on Mar 06, 2023 at 19:56:51 IST  (total: 00:00:01)
